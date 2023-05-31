@@ -123,7 +123,8 @@ Used in C pre-processor indent functions ppindent-c and ppindent-h"
 (defun ppindent-buffer (start)
   (let ((result (catch 'err (save-excursion (ppindent-aux start)))))
     (when result
-      (goto-line (car result))
+      (goto-char (point-min))
+      (forward-line (1- (car result)))
       (error "Error: %s" (cadr result)))))
 
 (defun ppindent-c ()
