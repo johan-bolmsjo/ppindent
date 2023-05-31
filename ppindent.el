@@ -76,6 +76,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (provide 'ppindent)
 
 (defgroup pp-indent nil
@@ -95,7 +97,7 @@ Used in C pre-processor indent functions ppindent-c and ppindent-h"
 
 (defun my-make-string (length init)
   "just like make-string, but makes an empty string if length is negative"
-  (when (minusp length)
+  (when (cl-minusp length)
     (setf length 0))
   (make-string length init))
 
@@ -105,7 +107,7 @@ Used in C pre-processor indent functions ppindent-c and ppindent-h"
     (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
       (cond ((starts-withp (match-string-no-properties 1) "if")
              (replace-match (concat "#" (my-make-string cnt ?\s) "\\1"))
-             (incf cnt ppindent-increment))
+             (cl-incf cnt ppindent-increment))
             ((starts-withp (match-string-no-properties 1) "el")
              (when (< (- cnt ppindent-increment) start)
                (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
@@ -115,7 +117,7 @@ Used in C pre-processor indent functions ppindent-c and ppindent-h"
             ((starts-withp (match-string-no-properties 1) "endif")
              (when (< (- cnt ppindent-increment) start)
                (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
-             (decf cnt ppindent-increment)
+             (cl-decf cnt ppindent-increment)
              (replace-match (concat "#" (my-make-string cnt ?\s) "\\1")))
             (t
              (replace-match (concat "#" (my-make-string cnt ?\s) "\\1")))))))
