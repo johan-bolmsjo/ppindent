@@ -1,6 +1,6 @@
 ;;; ppindent.el --- Indents C preprocessor directives
 
-;; Copyright (C) 2007 Free Software Foundation, Inc.
+;; Copyright (C) 2007,2023 Free Software Foundation, Inc.
 
 ;; Author: Craig McDaniel <craigmcd@gmail.com>
 ;; Keywords: languages, c
@@ -73,6 +73,7 @@
 ;;; History:
 
 ;; 2007-01-19 WCM Initial version
+;; 2023-05-31 Fixes for later Emacs versions
 
 ;;; Code:
 
